@@ -4,20 +4,93 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Vyrzou</title>
-  <meta name="description" content="Vyrzou: Roblox creator.">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <meta name="description" content="Vyrzou: 3D artist on Roblox.">
+  <meta name="theme-color" content="#000000">
+  <meta property="og:title" content="Vyrzou">
+  <meta property="og:description" content="3D artist on Roblox.">
+  <meta property="og:image" content="https://vyrzou.com/logo.webp">
+  <link rel="icon" href="favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>Vyrzou</h1>
-    <figure>
-      <img src="me.jpg" alt="A smiling wooden log figure sitting in the snow">
-      <figcaption>literally me</figcaption>
-    </figure>
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <main class="card">
+    <img class="avatar" src="logo.webp" alt="Vyrzou ram logo" width="120" height="120">
+    <h1><img class="signature" src="signature.webp" alt="Vyrzou" width="1200" height="460"></h1>
+
+    <div class="divider" aria-hidden="true"><span></span><img src="ram.png" alt=""><span></span></div>
+
+    <nav class="icons" aria-label="Links">
+      <a href="https://www.roblox.com/users/640519287/profile" target="_blank" rel="noopener" data-label="Roblox" aria-label="Roblox">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.16 1.5 1.5 18.84 18.84 22.5 22.5 5.16zm8.53 7.03-4.16-.88-.88 4.16 4.16.88z" transform="rotate(0 12 12)"/></svg>
+      </a>
+      <a href="https://github.com/vyrzou" target="_blank" rel="noopener" data-label="GitHub" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-1.97c-3.2.7-3.87-1.54-3.87-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.74.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+    </nav>
+
+    <a class="profile" href="https://www.roblox.com/users/640519287/profile" target="_blank" rel="noopener">
+      <img src="roblox.png" alt="" width="56" height="56">
+      <span class="who">
+        <strong>Vyr</strong>
+        <small>@Vyrzou</small>
+      </span>
+      <span class="tag">3D Artist</span>
+    </a>
+
+    <div class="divider" aria-hidden="true"><span></span><img src="ram.png" alt=""><span></span></div>
+
+    <footer>vyrzou.com</footer>
   </main>
+
+  <script>
+    // Slowly drifting stars behind the card.
+    const c = document.getElementById('stars');
+    const ctx = c.getContext('2d');
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let stars = [], w, h, dpr;
+
+    function size() {
+      dpr = window.devicePixelRatio || 1;
+      w = c.width = innerWidth * dpr;
+      h = c.height = innerHeight * dpr;
+      const n = Math.round((innerWidth * innerHeight) / 9000);
+      stars = Array.from({ length: n }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        r: (Math.random() * 1.3 + 0.4) * dpr,
+        vx: (Math.random() - 0.5) * 0.12 * dpr,
+        vy: (Math.random() * 0.15 + 0.03) * dpr,
+        a: Math.random() * 0.5 + 0.15,
+        t: Math.random() * Math.PI * 2
+      }));
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (const s of stars) {
+        if (!still) {
+          s.x += s.vx; s.y += s.vy; s.t += 0.01;
+          if (s.y > h) { s.y = -2; s.x = Math.random() * w; }
+          if (s.x < 0) s.x = w; else if (s.x > w) s.x = 0;
+        }
+        ctx.globalAlpha = s.a * (0.7 + 0.3 * Math.sin(s.t));
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+      }
+      if (!still) requestAnimationFrame(draw);
+    }
+
+    addEventListener('resize', () => { size(); if (still) draw(); });
+    size();
+    draw();
+  </script>
 </body>
 </html>
