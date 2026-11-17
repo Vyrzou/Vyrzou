@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -24,6 +24,7 @@
     <div class="slide" style="background-image:url(bg/4.webp)"></div>
   </div>
 
+  <section class="hero">
   <main class="card">
     <h1><img class="signature" src="signature.webp" alt="Vyrzou" width="1200" height="460"></h1>
 
@@ -66,6 +67,23 @@
 
     <footer>vyrzou.com</footer>
   </main>
+  <a class="scroll-hint" href="#art" aria-label="Scroll to art">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+  </section>
+
+  <section class="art" id="art">
+    <h2>Art</h2>
+    <div class="gallery">
+      <figure class="reveal">
+        <img src="art/1.webp" alt="A leafy tree creature with wooden arms and legs, 3D model" width="812" height="605" loading="lazy">
+      </figure>
+      <figure class="reveal">
+        <img src="art/2.webp" alt="The same tree creature as a meme" width="531" height="499" loading="lazy">
+      </figure>
+    </div>
+    <a class="art-link reveal" href="https://x.com/Vyrzou/status/1893915861708104081" target="_blank" rel="noopener">View the post on X</a>
+  </section>
 
   <div id="yt" aria-hidden="true"></div>
 
@@ -76,7 +94,7 @@
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
     </button>
     <div class="np-text">
-      <small><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="np-state">Click to play</span></small>
+      <small><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="np-state">Paused</span></small>
       <a href="https://youtu.be/Bc9xCCx8fJU" target="_blank" rel="noopener"><strong>Sea Lion Rap</strong></a>
       <span>Yuno Miles</span>
       <label class="vol">
@@ -102,6 +120,7 @@
     }
 
     // Background song from YouTube, with a now-playing box in the corner.
+    // It starts paused; visitors press play in the box.
     // DEFAULT_VOLUME is what new visitors hear (0-100). Visitors can change it with the slider.
     const DEFAULT_VOLUME = 40;
     const VIDEO = 'Bc9xCCx8fJU';
@@ -111,7 +130,7 @@
     const toggle = document.getElementById('np-toggle');
     const slider = document.getElementById('np-volume');
     const muteBtn = document.getElementById('np-mute');
-    let player, ready = false, wantPlay = true, muted = false;
+    let player, ready = false, wantPlay = false, muted = false;
 
     let volume = DEFAULT_VOLUME;
     try { const v = localStorage.getItem('vyrzou-volume'); if (v !== null) volume = +v; } catch (e) {}
@@ -126,31 +145,15 @@
       player = new YT.Player('yt', {
         width: 200, height: 113,
         videoId: VIDEO,
-        playerVars: { autoplay: 1, controls: 0, loop: 1, playlist: VIDEO, playsinline: 1 },
+        playerVars: { autoplay: 0, controls: 0, loop: 1, playlist: VIDEO, playsinline: 1 },
         events: {
-          onReady: () => { ready = true; applyVolume(); player.playVideo(); },
+          onReady: () => { ready = true; applyVolume(); update(); },
           onStateChange: update,
           onError: () => { npState.textContent = 'Can\'t play here'; }
         }
       });
     };
 
-    // Browsers block sound until the visitor clicks or presses a key, and YouTube may
-    // start the song muted. So every click or key press until it is really playing
-    // with sound tries again.
-    function tryStart(e) {
-      if (e && e.target.closest && e.target.closest('.np')) return;
-      if (!ready || !wantPlay) return;
-      applyVolume();
-      if (player.getPlayerState() !== YT.PlayerState.PLAYING) player.playVideo();
-      if (player.getPlayerState() === YT.PlayerState.PLAYING && !player.isMuted()) stopListening();
-    }
-    function stopListening() {
-      removeEventListener('pointerdown', tryStart, true);
-      removeEventListener('keydown', tryStart, true);
-    }
-    addEventListener('pointerdown', tryStart, true);
-    addEventListener('keydown', tryStart, true);
 
     function applyVolume() {
       if (!ready) return;
@@ -166,7 +169,7 @@
       np.classList.toggle('muted', muted || volume === 0);
       toggle.setAttribute('aria-label', playing ? 'Pause music' : 'Play music');
       if (playing && silent && !muted && volume > 0) npState.textContent = 'Click to unmute';
-      else npState.textContent = playing ? 'Now playing' : (wantPlay ? 'Click to play' : 'Paused');
+      else npState.textContent = playing ? 'Now playing' : 'Paused';
     }
 
     function paintSlider() {
@@ -201,6 +204,12 @@
       if (!muted && ready && wantPlay && player.getPlayerState() !== YT.PlayerState.PLAYING) player.playVideo();
       update();
     });
+
+    // Fade the art in as it scrolls into view.
+    const io = new IntersectionObserver(entries => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);
