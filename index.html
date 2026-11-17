@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=26">
+  <link rel="stylesheet" href="style.css?v=28">
 </head>
 <body>
   <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
@@ -232,25 +232,22 @@
   <!-- Hidden panel: opens when the footer chibi is clicked, or when "izzi" is typed. -->
   <div class="secret" id="secret" role="dialog" aria-modal="true" aria-labelledby="secret-title" hidden>
     <div class="secret-card">
-      <button class="secret-close" id="secret-close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+      <button class="secret-close" id="secret-close" aria-label="Close">&times;</button>
       <div class="couple" aria-hidden="true">
         <div class="hearts" id="hearts"></div>
         <img class="couple-me" src="oc/4.webp" alt="" width="1400" height="1288">
         <span class="couple-heart">&hearts;</span>
         <img class="couple-him" src="izzi.png" alt="" width="150" height="150">
       </div>
-      <h2 id="secret-title">This is my boyfriend</h2>
-      <div class="bf">
-        <div>
-          <strong>Izziworld</strong>
-          <small>3D Modeling &middot; Texturing &middot; Rigging</small>
-        </div>
-      </div>
-      <div class="bf-links">
-        <a href="https://x.com/IzziworldRBLX" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg><span>@IzziworldRBLX</span></a>
-        <a href="https://www.artstation.com/izziworld" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M0 17.7l2 3.5a2.4 2.4 0 0 0 2.1 1.3h13.4l-2.8-4.8zM24 17.7a2.4 2.4 0 0 0-.4-1.3L15.7 2.8a2.4 2.4 0 0 0-2.1-1.3H9.4l12.2 21.1 1.9-3.3c.4-.6.5-1 .5-1.6zM12.9 14.6L7.4 5.1 1.9 14.6z"/></svg><span>ArtStation</span></a>
-        <a href="https://www.roblox.com/users/2316359785/profile" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.46 0.67L23.33 5.46L18.54 23.33L0.67 18.54ZM9.74 8.08L15.92 9.74L14.26 15.92L8.08 14.26Z"/></svg><span>Roblox</span></a>
-      </div>
+      <h2 id="secret-title">This is my boyfriend.</h2>
+      <p class="bf-name"><strong>Izziworld</strong> &mdash; 3D modeling, texturing &amp; rigging</p>
+      <p class="bf-links">
+        <a href="https://x.com/IzziworldRBLX" target="_blank" rel="noopener">X</a>
+        <span aria-hidden="true">/</span>
+        <a href="https://www.artstation.com/izziworld" target="_blank" rel="noopener">ArtStation</a>
+        <span aria-hidden="true">/</span>
+        <a href="https://www.roblox.com/users/2316359785/profile" target="_blank" rel="noopener">Roblox</a>
+      </p>
     </div>
   </div>
 
@@ -542,18 +539,18 @@
     function spawnHeart() {
       const h = document.createElement('span');
       h.textContent = '♥';
-      const size = 10 + Math.random() * 16;
+      const size = 9 + Math.random() * 8;
       h.style.left = (10 + Math.random() * 80) + '%';
       h.style.fontSize = size + 'px';
       h.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
       h.style.setProperty('--dur', (2.2 + Math.random() * 1.8) + 's');
-      h.style.opacity = 0.5 + Math.random() * 0.5;
+      h.style.opacity = 0.35 + Math.random() * 0.4;
       heartsBox.appendChild(h);
       h.addEventListener('animationend', () => h.remove());
     }
     function openSecret() {
       if (!secret.hidden) return;
-      if (!reduce) { for (let n = 0; n < 8; n++) setTimeout(spawnHeart, n * 90); heartTimer = setInterval(spawnHeart, 260); }
+      if (!reduce) { for (let n = 0; n < 4; n++) setTimeout(spawnHeart, n * 150); heartTimer = setInterval(spawnHeart, 520); }
       secretFrom = document.activeElement;
       secret.hidden = false;
       requestAnimationFrame(() => secret.classList.add('open'));
