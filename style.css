@@ -410,6 +410,16 @@ h2 {
   pointer-events: none;
 }
 
+.placeholder-note {
+  display: inline-block;
+  margin: -6px 0 22px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px dashed rgba(196, 48, 58, 0.5);
+  color: #c9a0a4;
+  font-size: 0.85rem;
+}
+
 /* ---------- Contact ---------- */
 .contact .wrap { max-width: 760px; text-align: center; }
 .contact .label { justify-content: center; }
