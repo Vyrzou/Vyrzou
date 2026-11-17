@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="style.css?v=23">
 </head>
 <body>
   <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
@@ -354,7 +354,7 @@
     // Click a picture to see it big. Esc or clicking outside closes; arrow keys switch.
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
-    const arts = [...document.querySelectorAll('.gallery img, .portrait img, .hero-art img')];
+    const arts = [...document.querySelectorAll('.gallery img')];   // only the work art opens big
     let current = 0, lastFocus = null;
 
     function openArt(i) {
@@ -498,6 +498,12 @@
         new IntersectionObserver(([e]) => e.isIntersecting ? play() : stop(), { threshold: 0.6 }).observe(card);
       }
     });
+
+    // Discourage saving pictures: no right-click menu, no dragging, no long-press save on phones.
+    // (Nothing on the web can fully stop a determined person, but this blocks the easy ways.)
+    document.querySelectorAll('img, video').forEach(el => el.setAttribute('draggable', 'false'));
+    addEventListener('contextmenu', e => { if (e.target.closest('img, video, .slide, .game-media')) e.preventDefault(); });
+    addEventListener('dragstart', e => { if (e.target.closest('img, video')) e.preventDefault(); });
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);
