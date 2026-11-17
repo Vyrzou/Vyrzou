@@ -531,10 +531,7 @@ h2 {
   gap: 12px;
   padding: 8px 14px 8px 8px;
   max-width: calc(100vw - 32px);
-  border-radius: 14px;
-  background: rgba(12, 12, 12, 0.8);
-  border: 1px solid #1f1f1f;
-  backdrop-filter: blur(8px);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9);
   animation: rise 0.8s 0.3s ease-out both;
 }
 
