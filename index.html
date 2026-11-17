@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=25">
+  <link rel="stylesheet" href="style.css?v=26">
 </head>
 <body>
   <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
@@ -120,6 +120,10 @@
           <li>Blender</li><li>ZBrush</li><li>Substance Painter</li><li>3D-Coat</li><li>Roblox Studio</li><li>Plasticity</li><li>VS Code</li><li>Clip Studio Paint</li>
         </ul>
         <img class="peek" src="oc/4.webp" alt="" width="1400" height="1288" loading="lazy">
+        <span class="peek-pair" id="peek-pair" hidden>
+          <span class="peek-heart" aria-hidden="true">&hearts;</span>
+          <img class="peek-bf" src="izzi.png" alt="Izziworld" width="150" height="150">
+        </span>
       </div>
     </div>
   </section>
@@ -229,7 +233,6 @@
   <div class="secret" id="secret" role="dialog" aria-modal="true" aria-labelledby="secret-title" hidden>
     <div class="secret-card">
       <button class="secret-close" id="secret-close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
-      <p class="secret-kicker">you found it</p>
       <div class="couple" aria-hidden="true">
         <div class="hearts" id="hearts"></div>
         <img class="couple-me" src="oc/4.webp" alt="" width="1400" height="1288">
@@ -556,8 +559,20 @@
       requestAnimationFrame(() => secret.classList.add('open'));
       document.getElementById('secret-close').focus();
     }
+    // Once he's been found, he stays next to the chibi (remembered for this visitor).
+    const pair = document.getElementById('peek-pair');
+    function showPair(animate) {
+      pair.hidden = false;
+      if (animate) { pair.classList.remove('pop'); void pair.offsetWidth; pair.classList.add('pop'); }
+    }
+    try { if (localStorage.getItem('vyrzou-found') === '1') showPair(false); } catch (e) {}
+    pair.addEventListener('click', () => openSecret());
+
     function closeSecret() {
       clearInterval(heartTimer);
+      const first = pair.hidden;
+      setTimeout(() => showPair(first), 250);
+      try { localStorage.setItem('vyrzou-found', '1'); } catch (e) {}
       secret.classList.remove('open');
       setTimeout(() => { secret.hidden = true; }, 300);
       if (secretFrom) secretFrom.focus();

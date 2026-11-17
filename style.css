@@ -420,6 +420,38 @@ h2 {
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
 }
 
+/* He shows up next to the chibi once found. */
+.peek-pair {
+  position: absolute;
+  right: 118px;
+  bottom: -86px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: default;
+}
+
+.peek-pair[hidden] { display: none; }
+
+.peek-bf {
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: #1c1c1c;
+  border: 2px solid rgba(196, 48, 58, 0.6);
+  box-shadow: 0 0 18px rgba(196, 48, 58, 0.35);
+  order: -1;
+}
+
+.peek-heart {
+  color: var(--red);
+  font-size: 1.3rem;
+  text-shadow: 0 0 12px rgba(196, 48, 58, 0.8);
+  animation: beat 1.2s ease-in-out infinite;
+}
+
+.peek-pair.pop { animation: hop-in 0.55s cubic-bezier(.2,.8,.2,1) both; }
+
 /* ---------- Work ---------- */
 .gallery {
   display: grid;
@@ -886,6 +918,8 @@ h2 {
   .two { grid-template-columns: 1fr; }
   .portrait { max-width: 420px; margin: 0 auto; }
   .peek { width: 90px; bottom: -70px; }
+  .peek-pair { right: 92px; bottom: -56px; }
+  .peek-bf { width: 50px; height: 50px; }
   .sitter { width: 84px; top: -20px; }
 }
 
@@ -1082,5 +1116,5 @@ img, video {
 .bf-links svg { width: 15px; height: 15px; fill: currentColor; }
 
 @media (prefers-reduced-motion: reduce) {
-  .heart, .couple-heart, .couple-me, .couple-him { animation: none !important; }
+  .heart, .couple-heart, .couple-me, .couple-him, .peek-heart, .peek-pair { animation: none !important; }
 }
