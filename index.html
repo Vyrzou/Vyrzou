@@ -559,20 +559,18 @@
       requestAnimationFrame(() => secret.classList.add('open'));
       document.getElementById('secret-close').focus();
     }
-    // Once he's been found, he stays next to the chibi (remembered for this visitor).
+    // Once he's been found, he stays next to the chibi until the page is reloaded.
     const pair = document.getElementById('peek-pair');
     function showPair(animate) {
       pair.hidden = false;
       if (animate) { pair.classList.remove('pop'); void pair.offsetWidth; pair.classList.add('pop'); }
     }
-    try { if (localStorage.getItem('vyrzou-found') === '1') showPair(false); } catch (e) {}
     pair.addEventListener('click', () => openSecret());
 
     function closeSecret() {
       clearInterval(heartTimer);
       const first = pair.hidden;
       setTimeout(() => showPair(first), 250);
-      try { localStorage.setItem('vyrzou-found', '1'); } catch (e) {}
       secret.classList.remove('open');
       setTimeout(() => { secret.hidden = true; }, 300);
       if (secretFrom) secretFrom.focus();
