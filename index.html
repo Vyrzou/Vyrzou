@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=14">
+  <link rel="stylesheet" href="style.css?v=15">
 </head>
 <body>
   <!-- Black page with a colored glow that changes per section, under a dark vignette. -->
@@ -157,14 +157,14 @@
 
   <div class="np" id="np">
     <button class="np-art" id="np-toggle" aria-label="Play music">
-      <img src="https://i.ytimg.com/vi/Bc9xCCx8fJU/mqdefault.jpg" alt="">
+      <img src="https://i.ytimg.com/vi/f0X7Sm1H5oE/mqdefault.jpg" alt="">
       <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>
     </button>
     <div class="np-text">
       <small><span class="bars" aria-hidden="true"><i></i><i></i><i></i></span><span id="np-state">Paused</span></small>
-      <a href="https://youtu.be/Bc9xCCx8fJU" target="_blank" rel="noopener"><strong>Sea Lion Rap</strong></a>
-      <span>Yuno Miles</span>
+      <a href="https://youtu.be/f0X7Sm1H5oE" target="_blank" rel="noopener"><strong title="A Thousand Sirens at the Press of a Button">A Thousand Sirens at the Press of a Button</strong></a>
+      <span>Istasha</span>
       <label class="vol">
         <button type="button" id="np-mute" aria-label="Mute">
           <svg class="i-vol" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9zm12.5 3a4.5 4.5 0 0 0-2.5-4v8a4.5 4.5 0 0 0 2.5-4zM14 3.2v2.1a7 7 0 0 1 0 13.4v2.1a9 9 0 0 0 0-17.6z"/></svg>
@@ -191,7 +191,7 @@
     // It starts paused; visitors press play in the box.
     // DEFAULT_VOLUME is what new visitors hear (0-100). Visitors can change it with the slider.
     const DEFAULT_VOLUME = 40;
-    const VIDEO = 'Bc9xCCx8fJU';
+    const VIDEO = 'f0X7Sm1H5oE';
 
     const np = document.getElementById('np');
     const npState = document.getElementById('np-state');
