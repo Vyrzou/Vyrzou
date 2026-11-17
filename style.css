@@ -70,11 +70,10 @@ body {
 }
 
 .avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  object-fit: cover;
-  box-shadow: 0 0 0 1px #222, 0 0 40px rgba(255, 255, 255, 0.06);
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.18));
 }
 
 h1 { margin: 10px 0 0; line-height: 0; }
