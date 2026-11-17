@@ -915,3 +915,123 @@ img, video {
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
 }
+
+/* ---------- Hidden boyfriend panel ---------- */
+.secret {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.secret[hidden] { display: none; }
+.secret.open { opacity: 1; }
+
+.secret-card {
+  position: relative;
+  width: min(420px, 100%);
+  padding: 30px 26px 24px;
+  border-radius: 20px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(196, 48, 58, 0.35), transparent 70%),
+    #0d0d0d;
+  border: 1px solid rgba(196, 48, 58, 0.35);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.7);
+  transform: translateY(14px) scale(0.97);
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+}
+
+.secret.open .secret-card { transform: none; }
+
+.secret-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: #1e1e1e;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.secret-close:hover { color: var(--text); background: #2a2a2a; }
+.secret-close svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+.secret-kicker {
+  margin: 0 0 6px;
+  color: var(--red);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.secret h2 { font-size: 1.7rem; margin: 0 0 22px; }
+
+.heart {
+  display: inline-block;
+  color: var(--red);
+  animation: beat 1.2s ease-in-out infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.25); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.15); }
+}
+
+.bf {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border-radius: 14px;
+  background: #151515;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.bf img { width: 72px; height: 72px; border-radius: 50%; background: #222; border: 2px solid rgba(196, 48, 58, 0.5); }
+.bf strong { display: block; font-size: 1.1rem; }
+.bf small { color: var(--muted); font-size: 0.85rem; }
+
+.bf-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.bf-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color 0.15s, transform 0.15s;
+}
+
+.bf-links a:hover { border-color: rgba(196, 48, 58, 0.6); transform: translateY(-2px); }
+.bf-links svg { width: 15px; height: 15px; fill: currentColor; }
+
+@media (prefers-reduced-motion: reduce) {
+  .heart { animation: none; }
+}
