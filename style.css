@@ -344,6 +344,72 @@ h2 {
   font-size: 0.85rem;
 }
 
+.mini {
+  margin: 28px 0 12px;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.skills {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 520px;
+  border-top: 1px solid var(--line);
+}
+
+.skill {
+  display: grid;
+  grid-template-columns: 1fr auto 84px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.skill-name { font-weight: 600; font-size: 1rem; }
+
+.skill-level {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-align: right;
+}
+
+.meter { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+
+.meter i {
+  height: 6px;
+  border-radius: 999px;
+  background: #262626;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Lit segments fill in one after another when the section scrolls into view. */
+.meter i.on::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #8f1d26, var(--red));
+  box-shadow: 0 0 10px rgba(196, 48, 58, 0.6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(.2,.8,.2,1);
+}
+
+.reveal.in .meter i.on::after { transform: scaleX(1); }
+.reveal.in .skill:nth-child(1) .meter i:nth-child(2)::after { transition-delay: 0.15s; }
+.reveal.in .skill:nth-child(1) .meter i:nth-child(3)::after { transition-delay: 0.3s; }
+.reveal.in .skill:nth-child(2) i::after { transition-delay: 0.2s; }
+.reveal.in .skill:nth-child(2) i:nth-child(2)::after { transition-delay: 0.35s; }
+.reveal.in .skill:nth-child(3) i::after { transition-delay: 0.3s; }
+.reveal.in .skill:nth-child(3) i:nth-child(2)::after { transition-delay: 0.45s; }
+.reveal.in .skill:nth-child(4) i::after { transition-delay: 0.4s; }
+
 .peek {
   position: absolute;
   right: -10px;
@@ -751,6 +817,7 @@ h2 {
 @media (prefers-reduced-motion: reduce) {
   .hero-art img, .scroll-hint, .np, .bars i, .glow { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
+  .meter i.on::after { transform: none; transition: none; }
 }
 
 @keyframes rise {
