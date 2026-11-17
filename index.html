@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -79,6 +79,18 @@
       </figure>
     </div>
     <a class="art-link reveal" href="https://x.com/Vyrzou/status/1893915861708104081" target="_blank" rel="noopener">View the post on X</a>
+  </section>
+
+  <section class="art oc" id="oc">
+    <h2>My OC</h2>
+    <p class="oc-note">Commissioned art of my character. I didn't draw these.</p>
+    <div class="gallery oc-grid">
+      <figure class="reveal big dark"><img src="oc/1.webp" alt="My OC: dark portrait with red horn and red eyes" width="1065" height="1100" loading="lazy"></figure>
+      <figure class="reveal"><img src="oc/3.webp" alt="My OC: painted portrait with curled pink horns and floppy ears" width="1335" height="1400" loading="lazy"></figure>
+      <figure class="reveal"><img src="oc/2.webp" alt="My OC as a sleepy chibi with red horns" width="960" height="960" loading="lazy"></figure>
+      <figure class="reveal"><img src="oc/4.webp" alt="My OC as a grumpy chibi with crossed arms" width="1400" height="1288" loading="lazy"></figure>
+      <figure class="reveal dark"><img src="oc/5.webp" alt="My OC as a goofy chibi sticking its tongue out" width="474" height="494" loading="lazy"></figure>
+    </div>
     <a class="back-up" href="#top" aria-label="Back to the top">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
@@ -266,14 +278,15 @@
       else if (e.key === 'ArrowRight') openArt(current + 1);
     });
 
-    // One scroll (wheel, keys or the arrows) glides between the hub and the art.
-    const hub = document.getElementById('top');
-    const artSec = document.getElementById('art');
+    // One scroll (wheel, keys or the arrows) glides from one section to the next.
+    // Inside a section taller than the screen, scrolling works normally until its edge.
+    const sections = [...document.querySelectorAll('.hero, .art')];
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let gliding = false;
 
     function glideTo(y) {
       if (gliding) return;
+      y = Math.max(0, Math.min(y, document.documentElement.scrollHeight - innerHeight));
       const start = scrollY, dist = y - start;
       if (Math.abs(dist) < 2) return;
       if (reduce) { scrollTo(0, y); return; }
@@ -288,27 +301,52 @@
       })(t0);
     }
 
-    const artY = () => artSec.offsetTop;
-    const inHub = () => scrollY < artY() - 4;
-    const atArtTop = () => Math.abs(scrollY - artY()) <= 4;
+    function currentIndex() {
+      let i = 0;
+      sections.forEach((sec, n) => { if (sec.offsetTop <= scrollY + 4) i = n; });
+      return i;
+    }
+
+    // Returns true if it handled the move.
+    function step(dir) {
+      const i = currentIndex(), sec = sections[i];
+      const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+      if (dir > 0) {
+        if (scrollY + innerHeight < bottom - 4) {
+          // Still more of this section below; glide to the next section only if it starts on screen.
+          return false;
+        }
+        if (i + 1 < sections.length) { glideTo(sections[i + 1].offsetTop); return true; }
+        return false;
+      } else {
+        if (scrollY > top + 4) return false;
+        if (i > 0) {
+          const prev = sections[i - 1];
+          glideTo(Math.max(prev.offsetTop, top - innerHeight));
+          return true;
+        }
+        return false;
+      }
+    }
 
     addEventListener('wheel', e => {
-      if (!lb.hidden || e.ctrlKey) return;
+      if (!lb.hidden || e.ctrlKey || Math.abs(e.deltaY) < Math.abs(e.deltaX)) return;
       if (gliding) { e.preventDefault(); return; }
-      if (e.deltaY > 0 && inHub()) { e.preventDefault(); glideTo(artY()); }
-      else if (e.deltaY < 0 && (atArtTop() || (scrollY < artY() && scrollY > 0))) { e.preventDefault(); glideTo(0); }
+      if (step(e.deltaY > 0 ? 1 : -1)) e.preventDefault();
     }, { passive: false });
 
     addEventListener('keydown', e => {
       if (!lb.hidden || e.target.closest('input, button')) return;
-      const down = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey;
+      const down = ['ArrowDown', 'PageDown'].includes(e.key) || (e.key === ' ' && !e.shiftKey);
       const up = ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
-      if (down && inHub()) { e.preventDefault(); glideTo(artY()); }
-      else if (up && (atArtTop() || inHub())) { e.preventDefault(); glideTo(0); }
+      if (gliding && (down || up)) { e.preventDefault(); return; }
+      if ((down && step(1)) || (up && step(-1))) e.preventDefault();
     });
 
-    document.querySelectorAll('a[href="#art"], a[href="#top"]').forEach(a =>
-      a.addEventListener('click', e => { e.preventDefault(); glideTo(a.hash === '#art' ? artY() : 0); }));
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      const target = document.querySelector(a.hash);
+      if (target) a.addEventListener('click', e => { e.preventDefault(); glideTo(target.offsetTop); });
+    });
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);
