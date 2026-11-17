@@ -594,6 +594,7 @@ h2 {
 }
 
 .card-link:hover { border-color: #3a3a3a; background: rgba(24, 24, 24, 0.85); transform: translateY(-2px); }
+.card-link.wide { grid-column: 1 / -1; }
 .card-link.primary { border-color: rgba(196, 48, 58, 0.45); }
 .card-link.primary:hover { border-color: rgba(196, 48, 58, 0.8); }
 
@@ -665,6 +666,7 @@ h2 {
 .gallery .reveal:nth-child(2), .cards .reveal:nth-child(2) { transition-delay: 0.07s; }
 .cards .reveal:nth-child(3) { transition-delay: 0.14s; }
 .cards .reveal:nth-child(4) { transition-delay: 0.21s; }
+.cards .reveal:nth-child(5) { transition-delay: 0.28s; }
 
 /* Hidden YouTube player that plays the song. */
 #yt {
