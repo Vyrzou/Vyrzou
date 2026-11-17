@@ -86,7 +86,14 @@ body {
 .back-up:hover { color: var(--text); background: rgba(55, 55, 55, 0.8); transform: translateY(-2px); }
 .back-up svg { width: 22px; height: 22px; }
 
-.site-footer {
+.site-.tags {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+footer {
   margin-top: auto;
   padding-top: 40px;
   padding-bottom: 8px;
