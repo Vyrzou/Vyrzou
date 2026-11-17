@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=24">
+  <link rel="stylesheet" href="style.css?v=25">
 </head>
 <body>
   <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
@@ -230,9 +230,14 @@
     <div class="secret-card">
       <button class="secret-close" id="secret-close" aria-label="Close"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       <p class="secret-kicker">you found it</p>
-      <h2 id="secret-title">This is my boyfriend <span class="heart" aria-hidden="true">&hearts;</span></h2>
+      <div class="couple" aria-hidden="true">
+        <div class="hearts" id="hearts"></div>
+        <img class="couple-me" src="oc/4.webp" alt="" width="1400" height="1288">
+        <span class="couple-heart">&hearts;</span>
+        <img class="couple-him" src="izzi.png" alt="" width="150" height="150">
+      </div>
+      <h2 id="secret-title">This is my boyfriend</h2>
       <div class="bf">
-        <img src="izzi.png" alt="" width="96" height="96">
         <div>
           <strong>Izziworld</strong>
           <small>3D Modeling &middot; Texturing &middot; Rigging</small>
@@ -529,19 +534,35 @@
     // Hidden boyfriend panel.
     const secret = document.getElementById('secret');
     let secretFrom = null;
+    const heartsBox = document.getElementById('hearts');
+    let heartTimer = null;
+    function spawnHeart() {
+      const h = document.createElement('span');
+      h.textContent = '♥';
+      const size = 10 + Math.random() * 16;
+      h.style.left = (10 + Math.random() * 80) + '%';
+      h.style.fontSize = size + 'px';
+      h.style.setProperty('--drift', (Math.random() * 60 - 30) + 'px');
+      h.style.setProperty('--dur', (2.2 + Math.random() * 1.8) + 's');
+      h.style.opacity = 0.5 + Math.random() * 0.5;
+      heartsBox.appendChild(h);
+      h.addEventListener('animationend', () => h.remove());
+    }
     function openSecret() {
       if (!secret.hidden) return;
+      if (!reduce) { for (let n = 0; n < 8; n++) setTimeout(spawnHeart, n * 90); heartTimer = setInterval(spawnHeart, 260); }
       secretFrom = document.activeElement;
       secret.hidden = false;
       requestAnimationFrame(() => secret.classList.add('open'));
       document.getElementById('secret-close').focus();
     }
     function closeSecret() {
+      clearInterval(heartTimer);
       secret.classList.remove('open');
       setTimeout(() => { secret.hidden = true; }, 300);
       if (secretFrom) secretFrom.focus();
     }
-    document.querySelector('.wave').addEventListener('click', openSecret);
+    document.querySelector('.peek').addEventListener('click', openSecret);
     document.getElementById('secret-close').addEventListener('click', closeSecret);
     secret.addEventListener('click', e => { if (e.target === secret) closeSecret(); });
     let typed = '';
