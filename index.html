@@ -14,12 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=19">
+  <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
   <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
   <div class="bg" aria-hidden="true">
     <div class="glow show" style="--c: 150, 22, 34"></div>
+    <div class="glow" style="--c: 150, 22, 34"></div>
     <div class="glow" style="--c: 150, 22, 34"></div>
     <div class="glow" style="--c: 150, 22, 34"></div>
     <div class="glow" style="--c: 150, 22, 34"></div>
@@ -30,6 +31,7 @@
     <a class="brand" href="#top"><img src="ram.png" alt="" width="26" height="18"> Vyrzou</a>
     <nav aria-label="Sections">
       <a href="#about">About</a>
+      <a href="#games">Games</a>
       <a href="#work">Work</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -107,9 +109,36 @@
     </div>
   </section>
 
+  <section class="panel games" id="games">
+    <div class="wrap">
+      <p class="label reveal"><span>02</span> Games</p>
+      <h2 class="reveal">Games I work on</h2>
+      <article class="game reveal">
+        <a href="https://www.roblox.com/games/132352755769957/Asylum-Life" target="_blank" rel="noopener" aria-label="Open Asylum Life on Roblox">
+          <div class="game-media">
+            <img src="games/asylum-life.webp" alt="" width="768" height="432" loading="lazy">
+            <video src="games/asylum-life.mp4" muted loop playsinline preload="none" aria-hidden="true"></video>
+            <span class="game-go"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="game-info">
+            <img class="game-icon" src="games/asylum-life-icon.webp" alt="" width="44" height="44" loading="lazy">
+            <div>
+              <h3>Asylum Life</h3>
+              <p>Roleplay as a patient causing chaos or an orderly keeping the peace.</p>
+            </div>
+            <ul class="game-stats">
+              <li><strong>300M+</strong> visits</li>
+              <li><strong>3D Artist</strong> role</li>
+            </ul>
+          </div>
+        </a>
+      </article>
+    </div>
+  </section>
+
   <section class="panel work" id="work">
     <div class="wrap">
-      <p class="label reveal"><span>02</span> Work</p>
+      <p class="label reveal"><span>03</span> Work</p>
       <h2 class="reveal">Selected work</h2>
       <p class="placeholder-note reveal">These are placeholders for now. Real work coming soon.</p>
       <div class="gallery">
@@ -129,7 +158,7 @@
 
   <section class="panel contact" id="contact">
     <div class="wrap">
-      <p class="label reveal"><span>03</span> Contact</p>
+      <p class="label reveal"><span>04</span> Contact</p>
       <h2 class="reveal">Let&rsquo;s make something.</h2>
       <p class="sub reveal">Discord is the best way to reach me.</p>
       <div class="cards">
@@ -433,6 +462,22 @@
     }
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
     onScroll();
+
+    // Game cards: the video fades in and plays on hover (or when on screen, on touch devices).
+    const canHover = matchMedia('(hover: hover)').matches;
+    document.querySelectorAll('.game').forEach(card => {
+      const video = card.querySelector('video');
+      const play = () => { if (video.preload === 'none') video.preload = 'auto'; video.play().then(() => card.classList.add('playing')).catch(() => {}); };
+      const stop = () => { card.classList.remove('playing'); video.pause(); };
+      if (canHover && !reduce) {
+        card.addEventListener('mouseenter', play);
+        card.addEventListener('mouseleave', stop);
+        card.addEventListener('focusin', play);
+        card.addEventListener('focusout', stop);
+      } else if (!reduce) {
+        new IntersectionObserver(([e]) => e.isIntersecting ? play() : stop(), { threshold: 0.6 }).observe(card);
+      }
+    });
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);

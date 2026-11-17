@@ -486,6 +486,87 @@ h2 {
   font-size: 0.85rem;
 }
 
+/* ---------- Games ---------- */
+.game { max-width: 720px; }
+
+.game > a { display: block; text-decoration: none; }
+
+.game-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #161214;
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55);
+  transition: transform 0.7s cubic-bezier(.32,.72,0,1), border-color 0.3s;
+}
+
+.game-media img,
+.game-media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.5s cubic-bezier(.32,.72,0,1), transform 0.7s cubic-bezier(.32,.72,0,1);
+}
+
+.game-media video { opacity: 0; }
+.game.playing .game-media video { opacity: 1; }
+.game.playing .game-media img { opacity: 0; }
+
+.game:hover .game-media { transform: scale(1.015); border-color: rgba(196, 48, 58, 0.5); }
+
+.game-go {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.game-go svg { width: 16px; height: 16px; }
+.game:hover .game-go, .game:focus-within .game-go { opacity: 1; }
+
+.game-info {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.game-icon { flex: none; width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line); }
+
+.game-info h3 { margin: 0; font-size: 1.05rem; letter-spacing: -0.01em; }
+.game-info p { margin: 2px 0 0; color: var(--muted); font-size: 0.88rem; line-height: 1.4; }
+.game-info > div { flex: 1; min-width: 0; }
+
+.game-stats {
+  display: flex;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.game-stats strong { display: block; color: var(--text); font-size: 0.95rem; }
+
+@media (max-width: 560px) {
+  .game-info { flex-wrap: wrap; }
+  .game-stats { width: 100%; padding-left: 58px; }
+}
+
 /* ---------- Contact ---------- */
 .contact .wrap { max-width: 760px; text-align: center; }
 .contact .label { justify-content: center; }
