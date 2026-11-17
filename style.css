@@ -35,6 +35,22 @@ h1 {
   margin: 0;
 }
 
+figure { margin: 24px 0 0; }
+
+figure img {
+  display: block;
+  width: min(420px, 85vw);
+  height: auto;
+  border-radius: 16px;
+}
+
+figcaption {
+  margin-top: 14px;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
 p {
   color: var(--muted);
   font-size: 1.15rem;
