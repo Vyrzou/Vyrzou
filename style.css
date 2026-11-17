@@ -303,9 +303,63 @@ a:focus-visible { outline: 2px solid #777; outline-offset: 3px; }
 }
 .bars i { transform-origin: bottom; }
 
+.vol {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.vol button {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.vol button:hover { color: var(--text); }
+.vol svg { width: 16px; height: 16px; fill: currentColor; }
+.vol .i-mute { display: none; }
+.np.muted .vol .i-vol { display: none; }
+.np.muted .vol .i-mute { display: block; }
+
+.vol input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 110px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #ddd var(--fill, 40%), #3a3a3a var(--fill, 40%));
+  cursor: pointer;
+}
+
+.vol input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 0;
+}
+
+.vol input::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  border: 0;
+}
+
+.np.muted .vol input { opacity: 0.5; }
+
 /* Leave room for the now-playing box on small screens. */
 @media (max-width: 520px) {
-  body { padding-bottom: 96px; }
+  body { padding-bottom: 120px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
