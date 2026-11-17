@@ -86,14 +86,7 @@ body {
 .back-up:hover { color: var(--text); background: rgba(55, 55, 55, 0.8); transform: translateY(-2px); }
 .back-up svg { width: 22px; height: 22px; }
 
-.site-.tags {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-}
-
-footer {
+.site-footer {
   margin-top: auto;
   padding-top: 40px;
   padding-bottom: 8px;
@@ -550,4 +543,21 @@ a:focus-visible { outline: 2px solid #777; outline-offset: 3px; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .card { animation: none; }
   .icons a, .profile { transition: none; }
+}
+
+/* Stacked tags on the right of a card (Company over 3D Artist). */
+.tags {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  text-align: center;
+}
+
+.who strong,
+.who small {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
