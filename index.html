@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=6">
 </head>
 <body>
   <div class="bg" aria-hidden="true">
@@ -24,7 +24,7 @@
     <div class="slide" style="background-image:url(bg/4.webp)"></div>
   </div>
 
-  <section class="hero">
+  <section class="hero" id="top">
   <main class="card">
     <h1><img class="signature" src="signature.webp" alt="Vyrzou" width="1200" height="460"></h1>
 
@@ -65,7 +65,6 @@
 
     <div class="divider" aria-hidden="true"><span></span><img src="ram.png" alt=""><span></span></div>
 
-    <footer>vyrzou.com</footer>
   </main>
   <a class="scroll-hint" href="#art" aria-label="Scroll to art">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -83,6 +82,10 @@
       </figure>
     </div>
     <a class="art-link reveal" href="https://x.com/Vyrzou/status/1893915861708104081" target="_blank" rel="noopener">View the post on X</a>
+    <a class="back-up" href="#top" aria-label="Back to the top">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 15l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <footer class="site-footer">vyrzou.com</footer>
   </section>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged art" hidden>
@@ -265,6 +268,50 @@
       else if (e.key === 'ArrowLeft') openArt(current - 1);
       else if (e.key === 'ArrowRight') openArt(current + 1);
     });
+
+    // One scroll (wheel, keys or the arrows) glides between the hub and the art.
+    const hub = document.getElementById('top');
+    const artSec = document.getElementById('art');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let gliding = false;
+
+    function glideTo(y) {
+      if (gliding) return;
+      const start = scrollY, dist = y - start;
+      if (Math.abs(dist) < 2) return;
+      if (reduce) { scrollTo(0, y); return; }
+      gliding = true;
+      const dur = 650, t0 = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 4);   // fast start, soft landing
+      (function step(now) {
+        const t = Math.min(1, (now - t0) / dur);
+        scrollTo(0, start + dist * ease(t));
+        if (t < 1) requestAnimationFrame(step);
+        else setTimeout(() => { gliding = false; }, 120);
+      })(t0);
+    }
+
+    const artY = () => artSec.offsetTop;
+    const inHub = () => scrollY < artY() - 4;
+    const atArtTop = () => Math.abs(scrollY - artY()) <= 4;
+
+    addEventListener('wheel', e => {
+      if (!lb.hidden || e.ctrlKey) return;
+      if (gliding) { e.preventDefault(); return; }
+      if (e.deltaY > 0 && inHub()) { e.preventDefault(); glideTo(artY()); }
+      else if (e.deltaY < 0 && (atArtTop() || (scrollY < artY() && scrollY > 0))) { e.preventDefault(); glideTo(0); }
+    }, { passive: false });
+
+    addEventListener('keydown', e => {
+      if (!lb.hidden || e.target.closest('input, button')) return;
+      const down = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey;
+      const up = ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
+      if (down && inHub()) { e.preventDefault(); glideTo(artY()); }
+      else if (up && (atArtTop() || inHub())) { e.preventDefault(); glideTo(0); }
+    });
+
+    document.querySelectorAll('a[href="#art"], a[href="#top"]').forEach(a =>
+      a.addEventListener('click', e => { e.preventDefault(); glideTo(a.hash === '#art' ? artY() : 0); }));
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);

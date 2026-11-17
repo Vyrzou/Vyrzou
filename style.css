@@ -21,7 +21,12 @@ body {
   overflow-x: hidden;
 }
 
-html { scroll-behavior: smooth; }
+/* Mouse and keyboard glide between screens with script; on touch screens the
+   page snaps to the hub or the art when a swipe ends near one. */
+@media (pointer: coarse) {
+  html { scroll-snap-type: y proximity; }
+  .hero, .art { scroll-snap-align: start; }
+}
 
 .hero {
   position: relative;
@@ -54,9 +59,40 @@ html { scroll-behavior: smooth; }
   position: relative;
   z-index: 1;
   max-width: 980px;
+  min-height: 100vh;
+  min-height: 100svh;
   margin: 0 auto;
-  padding: 40px 16px 140px;
+  padding: 56px 16px 24px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.art .gallery { width: 100%; }
+
+.back-up {
+  margin-top: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  background: rgba(30, 30, 30, 0.7);
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+
+.back-up:hover { color: var(--text); background: rgba(55, 55, 55, 0.8); transform: translateY(-2px); }
+.back-up svg { width: 22px; height: 22px; }
+
+.site-footer {
+  margin-top: auto;
+  padding-top: 40px;
+  padding-bottom: 8px;
+  color: var(--faint);
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
 }
 
 .art h2 {
@@ -159,10 +195,10 @@ html { scroll-behavior: smooth; }
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.5s cubic-bezier(.2,.8,.2,1), transform 0.5s cubic-bezier(.2,.8,.2,1);
 }
 
-.gallery .reveal:nth-child(2) { transition-delay: 0.15s; }
+.gallery .reveal:nth-child(2) { transition-delay: 0.08s; }
 .reveal.in { opacity: 1; transform: none; }
 
 @media (max-width: 640px) {
@@ -338,11 +374,6 @@ h1 { margin: 0; line-height: 0; }
   white-space: nowrap;
 }
 
-footer {
-  margin-top: 6px;
-  color: var(--faint);
-  font-size: 0.85rem;
-}
 
 a:focus-visible { outline: 2px solid #777; outline-offset: 3px; }
 
@@ -504,7 +535,7 @@ a:focus-visible { outline: 2px solid #777; outline-offset: 3px; }
 
 /* Leave room for the now-playing box on small screens. */
 @media (max-width: 520px) {
-  .art { padding-bottom: 160px; }
+  .art { padding-bottom: 130px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
