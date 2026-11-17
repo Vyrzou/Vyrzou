@@ -28,28 +28,31 @@ a { color: inherit; }
 img { max-width: 100%; }
 a:focus-visible, button:focus-visible, [role="button"]:focus-visible { outline: 2px solid #888; outline-offset: 3px; }
 
-/* ---------- Background: darkened pictures that crossfade ---------- */
-.bg { position: fixed; inset: 0; z-index: 0; background: #000; }
+/* ---------- Background: black, with a soft colored glow per section ---------- */
+.bg { position: fixed; inset: 0; z-index: 0; background: #000; overflow: hidden; }
 
-.slide {
+.glow {
   position: absolute;
-  inset: -20px;
-  background-size: cover;
-  background-position: center;
-  filter: grayscale(1) blur(4px) brightness(0.22);
+  inset: -10%;
+  background:
+    radial-gradient(ellipse 60% 50% at 75% 35%, rgba(var(--c), 0.55), transparent 70%),
+    radial-gradient(ellipse 50% 45% at 20% 75%, rgba(var(--c), 0.28), transparent 70%);
   opacity: 0;
-  transition: opacity 1.6s ease;
+  transition: opacity 1.2s ease;
+  animation: drift 18s ease-in-out infinite alternate;
 }
 
-.slide.show { opacity: 1; }
+.glow.show { opacity: 1; }
 
-.bg::after {
-  content: "";
+@keyframes drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(2%, 2%, 0) scale(1.08); }
+}
+
+.vignette {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse at 70% 30%, rgba(120, 20, 28, 0.18), transparent 60%),
-    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+  background: radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.85) 100%);
 }
 
 /* ---------- Top bar ---------- */
@@ -128,15 +131,57 @@ h2 {
   font-weight: 800;
 }
 
-/* ---------- Hero ---------- */
+/* ---------- Hero: picture banner with a curved black edge ---------- */
 .hero {
+  display: block;
+  padding: 0 0 72px;
+}
+
+.banner {
+  position: relative;
+  height: 44vh;
+  min-height: 300px;
+  overflow: hidden;
+  clip-path: ellipse(78% 100% at 50% 0%);
+  background: #000;
+}
+
+.banner-move { position: absolute; inset: -6% 0; will-change: transform; }
+
+.banner .slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 30%;
+  filter: grayscale(1) contrast(1.25) brightness(0.85);
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.banner .slide.show { opacity: 1; }
+
+/* Darken the top (under the bar) and fade into black at the curve. */
+.banner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55), transparent 30%, transparent 60%, rgba(0, 0, 0, 0.75)),
+    radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.hero-inner {
+  position: relative;
   max-width: calc(var(--wrap) + 80px);
   margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 24px;
-  align-items: center;
+  align-items: end;
 }
+
+.hero-text { padding-top: 20px; }
 
 .eyebrow {
   margin: 0 0 6px;
@@ -214,11 +259,16 @@ h2 {
 
 .socials a:hover::after, .socials a:focus-visible::after { opacity: 1; transform: translateX(-50%); }
 
-.hero-art { position: relative; display: grid; place-items: center; }
+.hero-art {
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-top: -22vh;   /* the character pokes up over the curve into the banner */
+}
 
 .hero-art img {
   position: relative;
-  width: min(460px, 100%);
+  width: min(420px, 100%);
   height: auto;
   cursor: zoom-in;
   filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.6));
@@ -668,13 +718,11 @@ h2 {
 
 /* ---------- Phones and narrow screens ---------- */
 @media (max-width: 860px) {
-  .hero {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding-top: 84px;
-  }
-  .hero-art { order: -1; }
-  .hero-art img { width: min(300px, 70vw); }
+  .banner { height: 42vh; min-height: 260px; clip-path: ellipse(110% 100% at 50% 0%); }
+  .hero-inner { grid-template-columns: 1fr; text-align: center; }
+  .hero-art { order: -1; margin-top: -18vh; }
+  .hero-text { padding-top: 4px; }
+  .hero-art img { width: min(280px, 66vw); }
   .signature { margin: 0 auto; }
   .lead { margin-left: auto; margin-right: auto; }
   .pills, .socials { justify-content: center; }
@@ -693,7 +741,7 @@ h2 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-art img, .scroll-hint, .np, .bars i { animation: none; }
+  .hero-art img, .scroll-hint, .np, .bars i, .glow { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 

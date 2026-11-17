@@ -14,14 +14,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=14">
 </head>
 <body>
+  <!-- Black page with a colored glow that changes per section, under a dark vignette. -->
   <div class="bg" aria-hidden="true">
-    <div class="slide show" style="background-image:url(bg/1.webp)"></div>
-    <div class="slide" style="background-image:url(bg/2.webp)"></div>
-    <div class="slide" style="background-image:url(bg/3.webp)"></div>
-    <div class="slide" style="background-image:url(bg/4.webp)"></div>
+    <div class="glow show" style="--c: 150, 22, 34"></div>
+    <div class="glow" style="--c: 92, 30, 130"></div>
+    <div class="glow" style="--c: 20, 110, 84"></div>
+    <div class="glow" style="--c: 150, 82, 20"></div>
+    <div class="vignette"></div>
   </div>
 
   <header class="topbar">
@@ -34,6 +36,15 @@
   </header>
 
   <section class="panel hero" id="top">
+    <div class="banner" aria-hidden="true">
+      <div class="banner-move">
+        <div class="slide show" style="background-image:url(bg/1.webp)"></div>
+        <div class="slide" style="background-image:url(bg/2.webp)"></div>
+        <div class="slide" style="background-image:url(bg/3.webp)"></div>
+        <div class="slide" style="background-image:url(bg/4.webp)"></div>
+      </div>
+    </div>
+    <div class="hero-inner">
     <div class="hero-text">
       <p class="eyebrow">Portfolio &middot; 3D Artist</p>
       <h1><img class="signature" src="signature.webp" alt="Vyrzou" width="1200" height="460"></h1>
@@ -51,6 +62,7 @@
     <div class="hero-art">
       <div class="halo" aria-hidden="true"></div>
       <img src="oc/3.webp" alt="Vyr: black hair, curled pink ram horns, floppy ears and red eyes" width="1335" height="1400">
+    </div>
     </div>
     <a class="scroll-hint" href="#about" aria-label="Scroll down"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   </section>
@@ -378,6 +390,26 @@
       const target = document.querySelector(a.hash);
       if (target) a.addEventListener('click', e => { e.preventDefault(); glideTo(target.offsetTop); });
     });
+
+    // As you scroll: the banner drifts slower than the page, and the glow color
+    // behind everything fades to the current section's color.
+    const glows = document.querySelectorAll('.glow');
+    const bannerMove = document.querySelector('.banner-move');
+    let lastGlow = 0, ticking = false;
+    function onScroll() {
+      ticking = false;
+      if (!reduce && scrollY < innerHeight * 1.2) bannerMove.style.transform = `translate3d(0, ${scrollY * 0.35}px, 0)`;
+      let i = 0;
+      sections.forEach((sec, n) => { if (sec.offsetTop <= scrollY + innerHeight * 0.45) i = n; });
+      if (i !== lastGlow) {
+        glows[lastGlow].classList.remove('show');
+        glows[Math.min(i, glows.length - 1)].classList.add('show');
+        lastGlow = Math.min(i, glows.length - 1);
+      }
+      document.querySelectorAll('.topbar nav a').forEach(a => a.classList.toggle('active', a.hash === '#' + sections[i].id));
+    }
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+    onScroll();
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);
