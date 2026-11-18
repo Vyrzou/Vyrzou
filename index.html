@@ -23,8 +23,8 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=28">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=30">
 </head>
 <body>
   <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
@@ -34,16 +34,24 @@
     <div class="glow" style="--c: 150, 22, 34"></div>
     <div class="glow" style="--c: 150, 22, 34"></div>
     <div class="glow" style="--c: 150, 22, 34"></div>
+    <!-- Game-menu style rings and a giant faint name behind everything. -->
+    <svg class="hud" viewBox="0 0 100 100">
+      <circle class="hud-ring" cx="50" cy="50" r="48"/>
+      <circle class="hud-ticks" cx="50" cy="50" r="45.5"/>
+      <circle class="hud-arc" cx="50" cy="50" r="48"/>
+      <circle class="hud-ring faint" cx="50" cy="50" r="34"/>
+    </svg>
+    <div class="watermark">VYRZOU</div>
     <div class="vignette"></div>
   </div>
 
   <header class="topbar">
     <a class="brand" href="#top"><img src="ram.png" alt="" width="26" height="18"> Vyrzou</a>
     <nav aria-label="Sections">
-      <a href="#about">About</a>
-      <a href="#games">Games</a>
-      <a href="#work">Work</a>
-      <a href="#contact">Contact</a>
+      <a href="#about">About <kbd>1</kbd></a>
+      <a href="#games">Games <kbd>2</kbd></a>
+      <a href="#work">Work <kbd>3</kbd></a>
+      <a href="#contact">Contact <kbd>4</kbd></a>
     </nav>
   </header>
 
@@ -582,6 +590,27 @@
       typed = (typed + e.key.toLowerCase()).slice(-4);
       if (typed === 'izzi') openSecret();
     });
+
+    // Number keys 1-4 jump to a section, like the key hints in the top bar.
+    addEventListener('keydown', e => {
+      if (e.ctrlKey || e.metaKey || e.altKey || !lb.hidden || !secret.hidden) return;
+      if (e.target.closest && e.target.closest('input, textarea')) return;
+      const n = '1234'.indexOf(e.key);
+      if (n >= 0 && sections[n + 1]) glideTo(sections[n + 1].offsetTop);
+    });
+
+    // Pictures lean toward the mouse a little, like the angled game-menu panels.
+    if (canHover && !reduce) {
+      document.querySelectorAll('.game-media, .portrait img, .gallery img').forEach(el => {
+        el.addEventListener('pointermove', e => {
+          const r = el.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+          el.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg');
+          el.style.setProperty('--rx', (-y * 8).toFixed(2) + 'deg');
+        });
+        el.addEventListener('pointerleave', () => { el.style.removeProperty('--rx'); el.style.removeProperty('--ry'); });
+      });
+    }
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);
