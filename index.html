@@ -24,26 +24,11 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=30">
+  <link rel="stylesheet" href="style.css?v=31">
 </head>
 <body>
-  <!-- Black page with a deep red glow under a dark vignette (same color on every section). -->
-  <div class="bg" aria-hidden="true">
-    <div class="glow show" style="--c: 150, 22, 34"></div>
-    <div class="glow" style="--c: 150, 22, 34"></div>
-    <div class="glow" style="--c: 150, 22, 34"></div>
-    <div class="glow" style="--c: 150, 22, 34"></div>
-    <div class="glow" style="--c: 150, 22, 34"></div>
-    <!-- Game-menu style rings and a giant faint name behind everything. -->
-    <svg class="hud" viewBox="0 0 100 100">
-      <circle class="hud-ring" cx="50" cy="50" r="48"/>
-      <circle class="hud-ticks" cx="50" cy="50" r="45.5"/>
-      <circle class="hud-arc" cx="50" cy="50" r="48"/>
-      <circle class="hud-ring faint" cx="50" cy="50" r="34"/>
-    </svg>
-    <div class="watermark">VYRZOU</div>
-    <div class="vignette"></div>
-  </div>
+  <!-- Plain near-black page with one faint red light at the top. -->
+  <div class="bg" aria-hidden="true"></div>
 
   <header class="topbar">
     <a class="brand" href="#top"><img src="ram.png" alt="" width="26" height="18"> Vyrzou</a>
@@ -56,14 +41,6 @@
   </header>
 
   <section class="panel hero" id="top">
-    <div class="banner" aria-hidden="true">
-      <div class="banner-move">
-        <div class="slide show" style="background-image:url(bg/1.webp)"></div>
-        <div class="slide" style="background-image:url(bg/2.webp)"></div>
-        <div class="slide" style="background-image:url(bg/3.webp)"></div>
-        <div class="slide" style="background-image:url(bg/4.webp)"></div>
-      </div>
-    </div>
     <div class="hero-inner">
     <div class="hero-text">
       <p class="eyebrow">Portfolio &middot; 3D Artist</p>
@@ -282,17 +259,6 @@
   </div>
 
   <script>
-    // Crossfade the background pictures every few seconds.
-    const slides = document.querySelectorAll('.slide');
-    let i = 0;
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setInterval(() => {
-        slides[i].classList.remove('show');
-        i = (i + 1) % slides.length;
-        slides[i].classList.add('show');
-      }, 6000);
-    }
-
     // Background song from YouTube, with a now-playing box in the corner.
     // It starts paused; visitors press play in the box.
     // DEFAULT_VOLUME is what new visitors hear (0-100). Visitors can change it with the slider.
@@ -497,21 +463,12 @@
       if (target) a.addEventListener('click', e => { e.preventDefault(); glideTo(target.offsetTop); });
     });
 
-    // As you scroll: the banner drifts slower than the page, and the glow color
-    // behind everything fades to the current section's color.
-    const glows = document.querySelectorAll('.glow');
-    const bannerMove = document.querySelector('.banner-move');
-    let lastGlow = 0, ticking = false;
+    // As you scroll, highlight the current section in the top bar.
+    let ticking = false;
     function onScroll() {
       ticking = false;
-      if (!reduce && scrollY < innerHeight * 1.2) bannerMove.style.transform = `translate3d(0, ${scrollY * 0.35}px, 0)`;
       let i = 0;
       sections.forEach((sec, n) => { if (sec.offsetTop <= scrollY + innerHeight * 0.45) i = n; });
-      if (i !== lastGlow) {
-        glows[lastGlow].classList.remove('show');
-        glows[Math.min(i, glows.length - 1)].classList.add('show');
-        lastGlow = Math.min(i, glows.length - 1);
-      }
       document.querySelectorAll('.topbar nav a').forEach(a => a.classList.toggle('active', a.hash === '#' + sections[i].id));
     }
     addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -536,7 +493,7 @@
     // Discourage saving pictures: no right-click menu, no dragging, no long-press save on phones.
     // (Nothing on the web can fully stop a determined person, but this blocks the easy ways.)
     document.querySelectorAll('img, video').forEach(el => el.setAttribute('draggable', 'false'));
-    addEventListener('contextmenu', e => { if (e.target.closest('img, video, .slide, .game-media')) e.preventDefault(); });
+    addEventListener('contextmenu', e => { if (e.target.closest('img, video, .game-media')) e.preventDefault(); });
     addEventListener('dragstart', e => { if (e.target.closest('img, video')) e.preventDefault(); });
 
     // Hidden boyfriend panel.
