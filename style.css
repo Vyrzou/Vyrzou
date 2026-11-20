@@ -1497,5 +1497,7 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
 @media (max-width: 860px) { .hero .status { margin-left: auto; margin-right: auto; } }
 
 /* One featured piece: a single wide card instead of the 4-column grid */
-.work-grid.solo { grid-template-columns: 1fr; max-width: min(760px, (100svh - 300px) * 4 / 3); min-width: min(100%, 320px); }
+.work-grid.solo { grid-template-columns: 1fr; max-width: min(560px, (100svh - 300px) * 1.06); min-width: min(100%, 300px); }
+.work-media.natural { aspect-ratio: 531 / 499; }
 .work-grid.solo .work-card figcaption strong { font-size: 0.9rem; }
+.work-card:hover .work-media.natural img { transform: none; }   /* keep the meme text in frame */
