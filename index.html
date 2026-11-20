@@ -23,12 +23,19 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=32">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=33">
 </head>
 <body>
   <!-- Plain near-black page with one faint red light at the top. -->
   <div class="bg" aria-hidden="true"></div>
+
+  <!-- Short intro: ram logo, name and a loading line. Shows once per visit. -->
+  <div class="intro" id="intro" aria-hidden="true">
+    <img src="ram.png" alt="" width="120" height="83">
+    <p>Vyrzou <span>&middot; 3D Artist</span></p>
+    <i class="intro-line"></i>
+  </div>
 
   <header class="topbar">
     <a class="brand" href="#top"><img src="ram.png" alt="" width="26" height="18"> Vyrzou</a>
@@ -36,16 +43,18 @@
       <a href="#about">About <kbd>1</kbd></a>
       <a href="#games">Games <kbd>2</kbd></a>
       <a href="#work">Work <kbd>3</kbd></a>
-      <a href="#contact">Contact <kbd>4</kbd></a>
+      <a href="#process">Process <kbd>4</kbd></a>
+      <a href="#contact">Contact <kbd>5</kbd></a>
     </nav>
   </header>
 
   <section class="panel hero" id="top">
     <div class="hero-inner">
     <div class="hero-text">
+      <p class="status"><i></i> 3D Artist at Reverie Productions</p>
       <p class="eyebrow">Portfolio &middot; 3D Artist</p>
       <h1><img class="signature" src="signature.webp" alt="Vyrzou" width="1200" height="460"></h1>
-      <p class="lead">I&rsquo;m a mediocre 3D artist at Reverie Productions.</p>
+      <p class="lead">I&rsquo;m a mediocre 3D artist at <em>Reverie Productions.</em></p>
       <div class="pills">
         <a class="pill solid" href="#work">See my work</a>
         <a class="pill" href="#contact">Get in touch</a>
@@ -55,11 +64,23 @@
         <a href="https://discord.com/users/1084630629381050388" target="_blank" rel="noopener" data-label="Discord" aria-label="Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.32 4.37A19.8 19.8 0 0 0 15.4 2.85a13.7 13.7 0 0 0-.63 1.29 18.4 18.4 0 0 0-5.5 0 13.3 13.3 0 0 0-.64-1.29 19.7 19.7 0 0 0-4.92 1.52C.6 9.05-.24 13.6.18 18.1a19.9 19.9 0 0 0 6.03 3.05c.49-.66.92-1.37 1.3-2.1a12.9 12.9 0 0 1-2.04-.98c.17-.13.34-.26.5-.39a14.2 14.2 0 0 0 12.06 0c.16.14.33.27.5.39-.65.39-1.33.71-2.05.98.38.74.81 1.44 1.3 2.1a19.8 19.8 0 0 0 6.04-3.05c.5-5.21-.84-9.73-3.5-13.73zM8.02 15.33c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.96 2.42-2.16 2.42zm7.96 0c-1.18 0-2.16-1.09-2.16-2.42s.96-2.42 2.16-2.42c1.21 0 2.18 1.1 2.16 2.42 0 1.33-.95 2.42-2.16 2.42z"/></svg></a>
         <a href="https://x.com/Vyrzou" target="_blank" rel="noopener" data-label="X" aria-label="X"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.66l-5.21-6.82-5.97 6.82H1.67l7.73-8.84L1.25 2.25h6.83l4.71 6.23zm-1.16 17.52h1.83L7.08 4.13H5.12z"/></svg></a>
       </div>
+      <ul class="stats">
+        <li><strong><span class="count" data-to="300">0</span>M+</strong><small>visits on games I work on</small></li>
+        <li><strong>Reverie</strong><small>Productions, 3D Artist</small></li>
+        <li><strong>Stylized</strong><small>characters &amp; rigs</small></li>
+      </ul>
     </div>
     <div class="hero-art">
       <div class="halo" aria-hidden="true"></div>
       <img src="oc/3.webp" alt="Vyr: black hair, curled pink ram horns, floppy ears and red eyes" width="1335" height="1400">
     </div>
+    </div>
+    <div class="marquee toolkit" aria-label="My toolkit">
+      <p class="marquee-title">My toolkit</p>
+      <div class="marquee-track">
+        <ul><li>Blender</li><li>ZBrush</li><li>Substance Painter</li><li>3D-Coat</li><li>Roblox Studio</li><li>Plasticity</li><li>Clip Studio Paint</li></ul>
+        <ul aria-hidden="true"><li>Blender</li><li>ZBrush</li><li>Substance Painter</li><li>3D-Coat</li><li>Roblox Studio</li><li>Plasticity</li><li>Clip Studio Paint</li></ul>
+      </div>
     </div>
     <a class="scroll-hint" href="#about" aria-label="Scroll down"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   </section>
@@ -71,7 +92,7 @@
       </figure>
       <div class="copy reveal">
         <p class="label"><span>01</span> About</p>
-        <h2>Hi, I&rsquo;m Vyr.</h2>
+        <h2>Hi, I&rsquo;m <em>Vyr.</em></h2>
         <p>I&rsquo;m a mediocre 3D artist who enjoys dabbling in all kinds of creative work, from character art to rigging and environment design.</p>
         <h3 class="mini">Skills &amp; experience</h3>
         <ul class="skills">
@@ -116,7 +137,7 @@
   <section class="panel games" id="games">
     <div class="wrap">
       <p class="label reveal"><span>02</span> Games</p>
-      <h2 class="reveal">Games I work on</h2>
+      <h2 class="reveal">Games I <em>work on</em></h2>
       <article class="game reveal">
         <a href="https://www.roblox.com/games/132352755769957/Asylum-Life" target="_blank" rel="noopener" aria-label="Open Asylum Life on Roblox">
           <div class="game-media">
@@ -143,16 +164,55 @@
   <section class="panel work" id="work">
     <div class="wrap">
       <p class="label reveal"><span>03</span> Work</p>
-      <h2 class="reveal">Selected work</h2>
-      <p class="placeholder-note reveal">These are placeholders for now. Real work coming soon.</p>
-      <div class="gallery">
-        <figure class="reveal">
-          <img src="art/1.webp" alt="A leafy tree creature with wooden arms and legs, 3D model" width="812" height="605" loading="lazy">
-          <figcaption>Tree creature &middot; Blender, ZBrush</figcaption>
+      <h2 class="reveal">Selected <em>work</em></h2>
+      <p class="placeholder-note reveal">Empty boxes are placeholders. Real work coming soon.</p>
+      <div class="filters reveal" role="group" aria-label="Filter work">
+        <button type="button" class="filter active" data-f="all" aria-pressed="true">All <span></span></button>
+        <button type="button" class="filter" data-f="characters" aria-pressed="false">Characters <span></span></button>
+        <button type="button" class="filter" data-f="creatures" aria-pressed="false">Creatures <span></span></button>
+        <button type="button" class="filter" data-f="props" aria-pressed="false">Props <span></span></button>
+        <button type="button" class="filter" data-f="environments" aria-pressed="false">Environments <span></span></button>
+      </div>
+      <div class="work-grid">
+        <figure class="work-card reveal" data-cat="creatures">
+          <div class="work-media"><img src="art/1.webp" alt="A leafy tree creature with wooden arms and legs, 3D model" width="812" height="605" loading="lazy"></div>
+          <span class="tag">Stylized</span>
+          <figcaption><strong>Tree creature</strong><small>Creatures &middot; Blender, ZBrush</small></figcaption>
         </figure>
-        <figure class="reveal">
-          <img src="art/2.webp" alt="The tree creature as a meme" width="531" height="499" loading="lazy">
-          <figcaption>Same guy, worse decisions</figcaption>
+        <figure class="work-card reveal" data-cat="creatures">
+          <div class="work-media"><img src="art/2.webp" alt="The tree creature as a meme" width="531" height="499" loading="lazy"></div>
+          <span class="tag">Meme</span>
+          <figcaption><strong>Same guy, worse decisions</strong><small>Creatures &middot; Blender</small></figcaption>
+        </figure>
+        <figure class="work-card reveal" data-cat="characters">
+          <div class="work-media ph"><span>Image coming soon</span></div>
+          <span class="tag">Stylized</span>
+          <figcaption><strong>Character placeholder</strong><small>Characters &middot; 2026</small></figcaption>
+        </figure>
+        <figure class="work-card reveal" data-cat="characters">
+          <div class="work-media ph"><span>Image coming soon</span></div>
+          <span class="tag">Stylized</span>
+          <figcaption><strong>Rig placeholder</strong><small>Characters &middot; 2026</small></figcaption>
+        </figure>
+        <figure class="work-card reveal" data-cat="props">
+          <div class="work-media ph"><span>Image coming soon</span></div>
+          <span class="tag">PBR</span>
+          <figcaption><strong>Prop placeholder</strong><small>Props &middot; 2026</small></figcaption>
+        </figure>
+        <figure class="work-card reveal" data-cat="props">
+          <div class="work-media ph"><span>Image coming soon</span></div>
+          <span class="tag">Hand-painted</span>
+          <figcaption><strong>Weapon placeholder</strong><small>Props &middot; 2026</small></figcaption>
+        </figure>
+        <figure class="work-card reveal" data-cat="environments">
+          <div class="work-media ph"><span>Image coming soon</span></div>
+          <span class="tag">Stylized</span>
+          <figcaption><strong>Environment placeholder</strong><small>Environments &middot; 2026</small></figcaption>
+        </figure>
+        <figure class="work-card reveal" data-cat="creatures">
+          <div class="work-media ph"><span>Image coming soon</span></div>
+          <span class="tag">Stylized</span>
+          <figcaption><strong>Creature placeholder</strong><small>Creatures &middot; 2026</small></figcaption>
         </figure>
       </div>
       <a class="more reveal" href="https://x.com/Vyrzou" target="_blank" rel="noopener">More on X <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -160,10 +220,37 @@
     </div>
   </section>
 
+  <section class="panel process" id="process">
+    <div class="wrap">
+      <p class="label reveal"><span>04</span> Process</p>
+      <h2 class="reveal">From sketch <em>to Roblox.</em></h2>
+      <p class="sub-left reveal">Every model goes through the same six steps, so it lands in game clean and ready to use.</p>
+      <ol class="steps">
+        <li class="step reveal"><b>01</b><h3>Reference &amp; sketch</h3><p>Gather references and sketch the silhouette so it reads before any polygons exist.</p><span class="tool">Clip Studio Paint</span></li>
+        <li class="step reveal"><b>02</b><h3>Blockout</h3><p>Simple shapes to test size and proportions early, while changes are still cheap.</p><span class="tool">Blender</span></li>
+        <li class="step reveal"><b>03</b><h3>Sculpt</h3><p>Forms, folds and secondary detail sculpted in high resolution.</p><span class="tool">ZBrush</span></li>
+        <li class="step reveal"><b>04</b><h3>Retopo &amp; UVs</h3><p>A clean low-poly mesh that fits the budget, with tidy UV layouts.</p><span class="tool">Blender</span></li>
+        <li class="step reveal"><b>05</b><h3>Texturing</h3><p>Colour, wear and materials that give the model some history.</p><span class="tool">Substance Painter</span><span class="tool">3D-Coat</span></li>
+        <li class="step reveal"><b>06</b><h3>Rig &amp; in game</h3><p>Rigged, imported and checked in Roblox Studio under real lighting.</p><span class="tool">Roblox Studio</span></li>
+      </ol>
+    </div>
+    <div class="marquee band" aria-hidden="true">
+      <div class="marquee-track">
+        <ul><li>Characters</li><li>Rigging</li><li>Creatures</li><li>Props</li><li>Environments</li><li>UGC</li></ul>
+        <ul><li>Characters</li><li>Rigging</li><li>Creatures</li><li>Props</li><li>Environments</li><li>UGC</li></ul>
+      </div>
+      <div class="marquee-track reverse">
+        <ul><li>Stylized</li><li>Game-ready</li><li>Hand-painted</li><li>PBR</li><li>Roblox</li><li>Low-poly</li></ul>
+        <ul><li>Stylized</li><li>Game-ready</li><li>Hand-painted</li><li>PBR</li><li>Roblox</li><li>Low-poly</li></ul>
+      </div>
+    </div>
+  </section>
+
   <section class="panel contact" id="contact">
     <div class="wrap">
-      <p class="label reveal"><span>04</span> Contact</p>
-      <h2 class="reveal">Hello my alpacas.</h2>
+      <p class="status center reveal"><i></i> Open for work &amp; collabs</p>
+      <p class="label reveal"><span>05</span> Contact</p>
+      <h2 class="reveal big">Hello my <em>alpacas.</em></h2>
       <p class="sub reveal">Email or Discord is the best way to reach me.</p>
       <div class="cards">
         <a class="card-link reveal primary wide" href="mailto:vyrzou@gmail.com">
@@ -191,6 +278,10 @@
           <span class="who"><strong>Reverie Productions</strong><small>3D Artist</small></span>
           <span class="go"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
         </a>
+      </div>
+      <div class="copy-row reveal">
+        <span>Prefer to copy it?</span>
+        <button type="button" class="copy-btn" data-copy="vyrzou@gmail.com">vyrzou@gmail.com <b>Copy</b></button>
       </div>
       <footer class="site-footer">
         <img class="wave" src="oc/5.webp" alt="" width="474" height="494" loading="lazy">
@@ -235,6 +326,8 @@
       </p>
     </div>
   </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">&check; Email copied</div>
 
   <div id="yt" aria-hidden="true"></div>
 
@@ -354,7 +447,7 @@
     // Click a picture to see it big. Esc or clicking outside closes; arrow keys switch.
     const lb = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
-    const arts = [...document.querySelectorAll('.gallery img')];   // only the work art opens big
+    const arts = [...document.querySelectorAll('.work-grid img')];   // only the work art opens big
     let current = 0, lastFocus = null;
 
     function openArt(i) {
@@ -548,17 +641,17 @@
       if (typed === 'izzi') openSecret();
     });
 
-    // Number keys 1-4 jump to a section, like the key hints in the top bar.
+    // Number keys 1-5 jump to a section, like the key hints in the top bar.
     addEventListener('keydown', e => {
       if (e.ctrlKey || e.metaKey || e.altKey || !lb.hidden || !secret.hidden) return;
       if (e.target.closest && e.target.closest('input, textarea')) return;
-      const n = '1234'.indexOf(e.key);
+      const n = '12345'.indexOf(e.key);
       if (n >= 0 && sections[n + 1]) glideTo(sections[n + 1].offsetTop);
     });
 
     // Pictures lean toward the mouse a little, like the angled game-menu panels.
     if (canHover && !reduce) {
-      document.querySelectorAll('.game-media, .portrait img, .gallery img').forEach(el => {
+      document.querySelectorAll('.game-media, .portrait img, .work-media').forEach(el => {
         el.addEventListener('pointermove', e => {
           const r = el.getBoundingClientRect();
           const x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
@@ -568,6 +661,68 @@
         el.addEventListener('pointerleave', () => { el.style.removeProperty('--rx'); el.style.removeProperty('--ry'); });
       });
     }
+
+    // Intro: logo and loading line, then fade out. Only on the first page of a visit.
+    const intro = document.getElementById('intro');
+    let seen = false;
+    try { seen = sessionStorage.getItem('vyrzou-intro') === '1'; sessionStorage.setItem('vyrzou-intro', '1'); } catch (e) {}
+    if (seen || reduce) intro.remove();
+    else {
+      const hide = () => { if (!intro.isConnected) return; intro.classList.add('gone'); setTimeout(() => intro.remove(), 700); };
+      const done = () => setTimeout(hide, 1100);
+      if (document.readyState === 'complete') done(); else addEventListener('load', done, { once: true });
+      setTimeout(hide, 4000);   // never get stuck
+    }
+
+    // Top bar turns into a floating capsule once you scroll.
+    const topbar = document.querySelector('.topbar');
+    const capsule = () => topbar.classList.toggle('scrolled', scrollY > 40);
+    addEventListener('scroll', capsule, { passive: true });
+    capsule();
+
+    // Numbers count up when they come into view.
+    const countIO = new IntersectionObserver(entries => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        countIO.unobserve(e.target);
+        const el = e.target, to = +el.dataset.to;
+        if (reduce) { el.textContent = to; continue; }
+        const t0 = performance.now(), dur = 1400;
+        (function tick(now) {
+          const t = Math.min(1, (now - t0) / dur);
+          el.textContent = Math.round(to * (1 - Math.pow(1 - t, 3)));
+          if (t < 1) requestAnimationFrame(tick);
+        })(t0);
+      }
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.count').forEach(el => countIO.observe(el));
+
+    // Work filters: counts on each button, click to show one category.
+    const workCards = [...document.querySelectorAll('.work-card')];
+    document.querySelectorAll('.filter').forEach(btn => {
+      const f = btn.dataset.f;
+      btn.querySelector('span').textContent = f === 'all' ? workCards.length : workCards.filter(c => c.dataset.cat === f).length;
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter').forEach(b => { b.classList.toggle('active', b === btn); b.setAttribute('aria-pressed', b === btn); });
+        workCards.forEach(c => {
+          const show = f === 'all' || c.dataset.cat === f;
+          c.hidden = !show;
+          if (show) { c.classList.remove('pop'); void c.offsetWidth; c.classList.add('pop'); }
+        });
+      });
+    });
+
+    // Copy email button with a little toast.
+    const toast = document.getElementById('toast');
+    let toastTimer;
+    document.querySelectorAll('.copy-btn').forEach(btn => btn.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(btn.dataset.copy); }
+      catch (e) { const t = document.createElement('textarea'); t.value = btn.dataset.copy; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
+      btn.querySelector('b').textContent = 'Copied';
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toast.classList.remove('show'); btn.querySelector('b').textContent = 'Copy'; }, 1800);
+    }));
 
     // Keep the label honest if YouTube changes mute state on its own.
     setInterval(update, 1000);
