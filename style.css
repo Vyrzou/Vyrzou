@@ -782,13 +782,9 @@ h2 {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 14px 8px 8px;
+  padding: 0;
   max-width: calc(100vw - 32px);
-  border-radius: var(--radius);
-  background: var(--glass), rgba(6, 6, 6, 0.7);
-  border: 1px solid var(--edge);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.9);   /* no box: shadow keeps the text readable over the page */
   animation: rise 0.8s 0.3s ease-out both;
 }
 
@@ -1290,7 +1286,7 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
   gap: 8px;
 }
 .band li { font-size: clamp(1.1rem, 2.4vw, 1.7rem); letter-spacing: 0.04em; color: #2e2e2e; }
-.band .reverse li { color: transparent; -webkit-text-stroke: 1px #3a3a3a; }
+.band .reverse li { color: #262626; }
 
 /* ---------- Work: filters + card grid with placeholders ---------- */
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
@@ -1403,8 +1399,7 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
   font-size: 2rem;
   font-weight: 900;
   line-height: 1;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(196, 48, 58, 0.8);
+  color: var(--red);
 }
 .step h3 { margin: 0 0 6px; font-family: var(--display); font-size: 0.86rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
 .step p { margin: 0 0 14px; color: var(--muted); font-size: 0.88rem; line-height: 1.5; }
