@@ -1501,3 +1501,9 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
 .work-media.natural { aspect-ratio: 531 / 499; }
 .work-grid.solo .work-card figcaption strong { font-size: 0.9rem; }
 .work-card:hover .work-media.natural img { transform: none; }   /* keep the meme text in frame */
+
+/* Meme + empty placeholder boxes: meme and one square box on top, two wider boxes below */
+.work-grid.feature { grid-template-columns: 1fr 1fr; gap: 16px; max-width: min(100%, (100svh - 300px) * 2.12 + 16px); }
+.work-grid.feature .wide-ph .work-media { aspect-ratio: 16 / 9; }
+.work-grid.feature .work-card figcaption strong { font-size: 0.9rem; }
+@media (max-width: 560px) { .work-grid.feature { grid-template-columns: 1fr; } }
