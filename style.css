@@ -1518,3 +1518,12 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
 @media (max-width: 560px) { .work-grid.feature { grid-template-columns: 1fr; } }
 .more + .more { margin-left: 22px; }
 .cards .reveal:nth-child(6) { transition-delay: 0.35s; }
+
+/* Two game cards side by side; second picture fades in on hover for cards without a video */
+.games-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.games-grid .game { max-width: none; }
+.game-media .shot2 { opacity: 0; }
+.game.playing .game-media img.shot2 { opacity: 1; }
+.games-grid .game-stats { flex-direction: column; gap: 4px; text-align: right; }
+.games-grid .game-stats strong { display: inline; margin-right: 4px; }
+@media (max-width: 760px) { .games-grid { grid-template-columns: 1fr; } }

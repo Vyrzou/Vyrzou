@@ -24,7 +24,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;700;800;900&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=39">
+  <link rel="stylesheet" href="style.css?v=40">
 </head>
 <body>
   <!-- Plain near-black page with one faint red light at the top. -->
@@ -138,6 +138,7 @@
     <div class="wrap">
       <p class="label reveal"><span>02</span> Games</p>
       <h2 class="reveal">Games I <em>work on</em></h2>
+      <div class="games-grid">
       <article class="game reveal">
         <a href="https://www.roblox.com/games/132352755769957/Asylum-Life" target="_blank" rel="noopener" aria-label="Open Asylum Life on Roblox">
           <div class="game-media">
@@ -158,6 +159,28 @@
           </div>
         </a>
       </article>
+      <article class="game reveal">
+        <a href="https://www.roblox.com/games/111335412953190/Sudoku-Together" target="_blank" rel="noopener" aria-label="Open Sudoku Together on Roblox">
+          <div class="game-media">
+            <img src="games/sudoku-together.webp" alt="" width="768" height="432" loading="lazy">
+            <img class="shot2" src="games/sudoku-together-2.webp" alt="" width="768" height="432" loading="lazy">
+            <span class="game-go"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </div>
+          <div class="game-info">
+            <img class="game-icon" src="games/sudoku-together-icon.webp" alt="" width="44" height="44" loading="lazy">
+            <div>
+              <h3>Sudoku Together</h3>
+              <p>Solve sudoku puzzles with friends. Made for fun with my studio.</p>
+            </div>
+            <ul class="game-stats">
+              <li><strong>78K+</strong> visits</li>
+              <li><strong>Creator</strong> role</li>
+            </ul>
+          </div>
+        </a>
+      </article>
+      </div>
+      <a class="more reveal" href="https://www.roblox.com/communities/481567712/Solve" target="_blank" rel="noopener">My studio: .Solve <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
   </section>
 
@@ -544,6 +567,12 @@
     const canHover = matchMedia('(hover: hover)').matches;
     document.querySelectorAll('.game').forEach(card => {
       const video = card.querySelector('video');
+      if (!video) {
+        if (!card.querySelector('.shot2')) return;
+        const on = () => card.classList.add('playing'), off = () => card.classList.remove('playing');
+        if (canHover && !reduce) { card.addEventListener('mouseenter', on); card.addEventListener('mouseleave', off); card.addEventListener('focusin', on); card.addEventListener('focusout', off); }
+        return;
+      }
       const play = () => { if (video.preload === 'none') video.preload = 'auto'; video.play().then(() => card.classList.add('playing')).catch(() => {}); };
       const stop = () => { card.classList.remove('playing'); video.pause(); };
       if (canHover && !reduce) {
