@@ -1264,8 +1264,8 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
 /* Separator between words: the ram logo, tinted red via a mask */
 .marquee li::after {
   content: "";
-  width: 1.3em;
-  height: 0.9em;
+  width: 0.85em;
+  height: 0.58em;
   margin: 0 26px;
   background: var(--red);
   -webkit-mask: url(ram.png) center / contain no-repeat;
@@ -1527,3 +1527,123 @@ h2.big { font-size: clamp(2.6rem, 8vw, 5.2rem); }
 .games-grid .game-stats { flex-direction: column; gap: 4px; text-align: right; }
 .games-grid .game-stats strong { display: inline; margin-right: 4px; }
 @media (max-width: 760px) { .games-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Sun / moon theme button (top right) ---------- */
+.topbar nav { margin-left: auto; }
+.theme-btn {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  margin-left: clamp(12px, 2.5vw, 24px);
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid var(--edge);
+  background: var(--glass);
+  color: var(--text);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.3s;
+}
+.theme-btn:hover { border-color: var(--edge-hi); transform: rotate(20deg); }
+.theme-btn svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.theme-btn .i-sun circle { fill: currentColor; }
+.theme-btn .i-moon { fill: currentColor; stroke: none; display: none; }
+:root[data-theme="light"] .theme-btn .i-sun { display: none; }
+:root[data-theme="light"] .theme-btn .i-moon { display: block; }
+
+/* ---------- Music player seek bar ---------- */
+.seek {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-variant-numeric: tabular-nums;
+}
+.seek input {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 150px;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--red) var(--fill, 0%), #3a3a3a var(--fill, 0%));
+  cursor: pointer;
+}
+.seek input::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 0; }
+.seek input::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 0; }
+.vol { margin-top: 4px; }
+
+/* ---------- Light mode ---------- */
+body, .bg, .topbar, .card-link, .step, .work-media, .game-media { transition: background-color 0.3s, color 0.3s, border-color 0.3s; }
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f1f0;
+  --text: #161616;
+  --muted: #666;
+  --faint: #a9a9a9;
+  --line: rgba(0, 0, 0, 0.08);
+  --panel: rgba(255, 255, 255, 0.75);
+  --glass: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.7));
+  --edge: rgba(0, 0, 0, 0.1);
+  --edge-hi: rgba(0, 0, 0, 0.3);
+}
+:root[data-theme="light"] .bg { background: radial-gradient(ellipse 70% 45% at 50% -8%, rgba(196, 48, 58, 0.12), transparent 70%), #f3f1f0; }
+:root[data-theme="light"] .topbar { background: linear-gradient(to bottom, rgba(243, 241, 240, 0.92), rgba(243, 241, 240, 0)); }
+:root[data-theme="light"] .topbar.scrolled { background: rgba(255, 255, 255, 0.78); box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08); }
+:root[data-theme="light"] .intro { background: var(--bg); }
+
+/* White artwork (signature, ram logo) turns black */
+:root[data-theme="light"] .signature { filter: invert(1); }
+:root[data-theme="light"] .brand img,
+:root[data-theme="light"] .intro img { filter: invert(1); }
+
+:root[data-theme="light"] .lead,
+:root[data-theme="light"] .copy p,
+:root[data-theme="light"] .sub,
+:root[data-theme="light"] .sub-left { color: #454545; }
+:root[data-theme="light"] .lead em { color: var(--text); }
+
+/* Solid light buttons become solid dark ones */
+:root[data-theme="light"] .pill.solid,
+:root[data-theme="light"] .filter.active,
+:root[data-theme="light"] .copy-btn b,
+:root[data-theme="light"] .toast { color: #fff; }
+
+:root[data-theme="light"] .chips li,
+:root[data-theme="light"] .tool,
+:root[data-theme="light"] .filter { color: #444; }
+:root[data-theme="light"] .marquee li { color: #555; }
+:root[data-theme="light"] .band li { color: #dddad8; }
+:root[data-theme="light"] .band .reverse li { color: #e3e0de; }
+
+:root[data-theme="light"] .card-link,
+:root[data-theme="light"] .step { background: var(--glass), rgba(255, 255, 255, 0.6); box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05); }
+:root[data-theme="light"] .card-link:hover { background: var(--glass), #fff; }
+:root[data-theme="light"] .card-link .ic { background: rgba(0, 0, 0, 0.04); }
+
+:root[data-theme="light"] .work-media,
+:root[data-theme="light"] .game-media { background: #e5e2e0; box-shadow: 0 14px 30px rgba(0, 0, 0, 0.1); }
+:root[data-theme="light"] .work-media.ph { background: repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.035) 0 10px, transparent 10px 20px), #eae7e5; }
+:root[data-theme="light"] .portrait img { box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); }
+
+:root[data-theme="light"] .meter i { background: rgba(0, 0, 0, 0.08); }
+:root[data-theme="light"] .back-up { background: rgba(0, 0, 0, 0.06); }
+:root[data-theme="light"] .back-up:hover { background: rgba(0, 0, 0, 0.12); }
+
+/* Music player on a light page */
+:root[data-theme="light"] .np { text-shadow: none; }
+:root[data-theme="light"] .vol input { background: linear-gradient(to right, #222 var(--fill, 40%), #cfcfcf var(--fill, 40%)); }
+:root[data-theme="light"] .seek input { background: linear-gradient(to right, var(--red) var(--fill, 0%), #cfcfcf var(--fill, 0%)); }
+:root[data-theme="light"] .vol input::-webkit-slider-thumb,
+:root[data-theme="light"] .seek input::-webkit-slider-thumb { background: #161616; }
+:root[data-theme="light"] .vol input::-moz-range-thumb,
+:root[data-theme="light"] .seek input::-moz-range-thumb { background: #161616; }
+
+@media (max-width: 560px) {
+  .theme-btn { width: 30px; height: 30px; margin-left: 10px; }
+  .seek input { width: 110px; }
+}
+@media (max-width: 440px) { .brand span { display: none; } .brand img { width: 26px; } }
