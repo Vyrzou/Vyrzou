@@ -1651,3 +1651,7 @@ body, .bg, .topbar, .card-link, .step, .work-media, .game-media { transition: ba
 /* Ram separators: normal size in the toolkit strip, smaller in the big bottom strips */
 .toolkit li::after { width: 1.3em; height: 0.9em; }
 .band li::after { width: 0.6em; height: 0.4em; margin: 0 22px; }
+
+/* Back / next song buttons beside the volume */
+.skip { display: flex; gap: 2px; margin-left: 6px; }
+.skip svg { width: 15px; height: 15px; }
