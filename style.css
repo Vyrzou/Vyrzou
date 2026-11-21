@@ -1647,3 +1647,7 @@ body, .bg, .topbar, .card-link, .step, .work-media, .game-media { transition: ba
   .seek input { width: 110px; }
 }
 @media (max-width: 440px) { .brand span { display: none; } .brand img { width: 26px; } }
+
+/* Ram separators: normal size in the toolkit strip, smaller in the big bottom strips */
+.toolkit li::after { width: 1.3em; height: 0.9em; }
+.band li::after { width: 0.6em; height: 0.4em; margin: 0 22px; }
